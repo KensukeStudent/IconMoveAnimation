@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoveControl : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class MoveControl : MonoBehaviour
     [SerializeField]
     private bool isGo = false;
 
+    [SerializeField]
+    private Button[] buttons = null;
+
+    [SerializeField]
+    private float ativeDuration;
+
     private void Awake()
     {
         objsVec = new Vector2[objs.Length];
@@ -18,6 +25,31 @@ public class MoveControl : MonoBehaviour
         {
             objsVec[i] = objs[i].transform.position;
         }
+
+        SetEvent();
+    }
+
+    private void SetEvent()
+    {
+        buttons[0].onClick.AddListener(() =>
+        {
+            for (int i = 0; i < objs.Length; i++)
+            {
+                objs[i].GetComponent<MoveObj1>().enabled = true;
+                objs[i].GetComponent<MoveObj2>().enabled = false;
+            }
+            OnGO();
+        });
+
+        buttons[0].onClick.AddListener(() =>
+        {
+            for (int i = 0; i < objs.Length; i++)
+            {
+                objs[i].GetComponent<MoveObj1>().enabled = false;
+                objs[i].GetComponent<MoveObj2>().enabled = true;
+            }
+            OnGO();
+        });
     }
 
     private IEnumerator CO()
@@ -32,7 +64,7 @@ public class MoveControl : MonoBehaviour
             for (int i = 0; i < objs.Length; i++)
             {
                 objs[i].SetActive(true);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(ativeDuration);
             }
             break;
         }
@@ -40,7 +72,7 @@ public class MoveControl : MonoBehaviour
         isGo = false;
     }
 
-    public void OnGO()
+    private void OnGO()
     {
         if (!isGo)
         {
