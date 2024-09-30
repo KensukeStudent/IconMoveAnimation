@@ -55,10 +55,4 @@ public class MoveObj2 : MonoBehaviour
         }
         currentV -= v1 * Time.deltaTime;
     }
-
-    private void Sample3()
-    {
-        // 積分で作ってみる
-        // せっかく勉強したので https://youtu.be/Qd6t44Zt5nY?t=3517
-    }
 }
