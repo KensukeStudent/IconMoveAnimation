@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 /// <summary>
 /// 初速度・加速度を使用したアニメーション
@@ -27,6 +28,8 @@ public class MoveObj2 : MonoBehaviour
     /// </summary>
     private Vector3 startVec;
 
+    public Action OnComplete = null;
+
     private void OnEnable()
     {
         var spreadAngle = UnityEngine.Random.Range(0.0f, 360f);
@@ -40,6 +43,7 @@ public class MoveObj2 : MonoBehaviour
         if (Vector2.Distance(goalPos.position, transform.position) < 0.1f)
         {
             gameObject.SetActive(false);
+            OnComplete?.Invoke();
             return;
         }
 

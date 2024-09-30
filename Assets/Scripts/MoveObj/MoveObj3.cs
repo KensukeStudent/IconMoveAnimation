@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// 初速度・加速度を使用したアニメーション
@@ -27,6 +28,8 @@ public class MoveObj3 : MonoBehaviour
 
     private int no = 0;
 
+    public Action OnComplete = null;
+
     public void Init()
     {
         no = 0;
@@ -53,6 +56,7 @@ public class MoveObj3 : MonoBehaviour
             if (no == list.Count)
             {
                 gameObject.SetActive(false);
+                OnComplete?.Invoke();
                 return;
             }
         }

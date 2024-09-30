@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// DOTweenを使用したアニメーション
@@ -20,6 +21,8 @@ public class MoveObj1 : MonoBehaviour
 
     private Sequence sequence = null;
 
+    public Action OnComplete = null;
+
     private void OnEnable()
     {
         sequence?.Kill();
@@ -34,7 +37,7 @@ public class MoveObj1 : MonoBehaviour
         sequence.AppendCallback(() =>
         {
             gameObject.SetActive(false);
-        });
+        }).OnComplete(() => OnComplete?.Invoke());
 
 
         sequence.Play();

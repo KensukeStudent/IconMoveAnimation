@@ -20,6 +20,12 @@ public class MoveControl : MonoBehaviour
     [SerializeField]
     private new AudioSource audio = null;
 
+    [SerializeField]
+    private AudioClip clip1;
+
+    [SerializeField]
+    private AudioClip clip2;
+
     private void Awake()
     {
         objsVec = new Vector2[objs.Length];
@@ -40,6 +46,11 @@ public class MoveControl : MonoBehaviour
                 objs[i].GetComponent<MoveObj1>().enabled = true;
                 objs[i].GetComponent<MoveObj2>().enabled = false;
                 objs[i].GetComponent<MoveObj3>().enabled = false;
+
+                objs[i].GetComponent<MoveObj1>().OnComplete = () =>
+                {
+                    audio.PlayOneShot(clip2);
+                };
             }
             OnGO();
         });
@@ -51,6 +62,11 @@ public class MoveControl : MonoBehaviour
                 objs[i].GetComponent<MoveObj1>().enabled = false;
                 objs[i].GetComponent<MoveObj2>().enabled = true;
                 objs[i].GetComponent<MoveObj3>().enabled = false;
+
+                objs[i].GetComponent<MoveObj2>().OnComplete = () =>
+                {
+                    audio.PlayOneShot(clip2);
+                };
             }
             OnGO();
         });
@@ -64,6 +80,10 @@ public class MoveControl : MonoBehaviour
                 objs[i].GetComponent<MoveObj3>().enabled = true;
 
                 objs[i].GetComponent<MoveObj3>().Init();
+                objs[i].GetComponent<MoveObj3>().OnComplete = () =>
+                {
+                    audio.PlayOneShot(clip2);
+                };
             }
             OnGO();
         });
@@ -81,7 +101,7 @@ public class MoveControl : MonoBehaviour
             for (int i = 0; i < objs.Length; i++)
             {
                 objs[i].SetActive(true);
-                audio.Play();
+                audio.PlayOneShot(clip1);
                 yield return new WaitForSeconds(ativeDuration);
             }
             break;
