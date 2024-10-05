@@ -30,6 +30,9 @@ public class MoveObj3 : MonoBehaviour
 
     public Action OnComplete = null;
 
+    [SerializeField]
+    private float distance = 0.3f;
+
     public void Init()
     {
         no = 0;
@@ -49,7 +52,7 @@ public class MoveObj3 : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(list[no].GetPos(), transform.position) < 0.3f)
+        if (Vector2.Distance(list[no].GetPos(), transform.position) < distance)
         {
             no++;
 
